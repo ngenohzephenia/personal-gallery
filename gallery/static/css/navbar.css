@@ -1,0 +1,9 @@
+img{
+    height: 20px;
+}
+
+a{
+    color: white;
+}
+
+a:hover { color: #2d09d1; }
