@@ -1,33 +1,30 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-import datetime as dt
+from django.http import HttpResponse,Http404
+from gallery.models import Category,Image,Location
 
 # Create your views here.
-def welcome(request):
-    return HttpResponse('Welcome to my Personal Gallery')
 
-def gallery_of_day(request):
-    date = dt.date.today()
+def home(request):
+    # import pdb; pdb.set_trace()
+    return  render(request, 'all/dashboard.html')
 
-    # FUNCTION TO CONVERT DATE OBJECT TO FIND EXACT DAY
-    day = convert_dates(date)
-    html = f'''
-        <html>
-            <body>
-                <h1>Gallery for {day}  {date.day}-{date.month}-{date.year}</h1>
-            </body>
-        </html>
-            '''
-    return HttpResponse(html)
+def about(request):
+    return  render(request, 'all/about.html')  
 
+def images(request):
+    images= Image.objects.all()
+    categories= Category.objects.all()
+    location= Location.objects.all()
+    return render(request, 'all/images.html',locals())
 
-def convert_dates(dates):
-
-    # Function that gets the weekday number for the date.
-    day_number = dt.date.weekday(dates)
-
-    days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday',"Sunday"]
-
-    # Returning the actual day of the week
-    day = days[day_number]
-    return day
+def search_category(request):
+    if 'image' in request.GET and request.GET["image"]:
+        search_term=request.GET.get("image")
+        search_images=Image.search_by_category(search_term)
+        message=f"{search_term}"
+        
+        return render(request, 'all/images.html', {"message":message, "images": search_images})
+    
+    else:
+        message="You haven't  searched for any term"
+        return render(request, 'all/images.html',{"message": message})
