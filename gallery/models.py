@@ -22,6 +22,14 @@ class Image(models.Model):
         self.image_category = category if category else self.image_category 
         self.save()
 
+    def __str__(self):
+        return self.name
+
+    @classmethod
+    def search_by_category(cls,search_term):
+        images = cls.objects.filter(image_category__category__icontains=search_term)
+        return images    
+
 
 
     
