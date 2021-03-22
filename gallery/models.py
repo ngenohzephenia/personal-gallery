@@ -13,6 +13,15 @@ class Image(models.Model):
     def __str__(self):
         return self.save()
 
+    def delete_image(self):
+        self.delete()
+
+
+    def update_image(self, Name=None, category=None):
+        self.name = Name if Name else self.Name
+        self.image_category = category if category else self.image_category 
+        self.save()
+
 
 
     
