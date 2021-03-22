@@ -1,8 +1,19 @@
-from django.conf.urls import url
-from . import views
+from django.urls import path
+from gallery.views import images,about,home,search_category
+from django.conf import settings
+from django.conf.urls.static import static
+from django.views.static import serve
 
-urlpatterns=[
-    url('^$',views.welcome,name = 'welcome'),
-    url('^today/$',views.gallery_of_day,name='galleryToday'),
-    url(r'^archives/(\d{4}-\d{2}-\d{2})/$',views.past_days_gallery,name = 'pastGallery')
+
+
+urlpatterns = [
+    path('', home, name="home"),
+    path('about/', about, name="about"),
+    path('images/',images),
+    path('search_category/', search_category, name="search_category"),
+    path('media/path', serve,{'document_root': settings.MEDIA_ROOT}),
+    path('static/path', serve,{'document_root': settings.STATIC_ROOT}),
 ]
+
+if settings.DEBUG:
+    urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
