@@ -3,7 +3,7 @@ from django.test import TestCase
 # Create your tests here.
 class ImageTestClass(TestCase):
     def setup(self):
-        self.image_location = Location(name='Rift-Valley')
+        self.image_location = Location(name='mombasa')
         self.image_loaction.save()
 
         self.image_category = Category(name='Food')
@@ -13,7 +13,7 @@ class ImageTestClass(TestCase):
         self.image_food.save_image()
 
 
-     def test_instance(self):
+    def test_instance(self):
         self.assertTrue(instance(self.image_food, Image))
 
     def tearDown(self):

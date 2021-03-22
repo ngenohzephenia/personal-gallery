@@ -16,7 +16,8 @@ Including another URLconf
 from django.conf.urls import url,include
 from django.contrib import admin
 
+
 urlpatterns = [
     url('admin/', admin.site.urls),
-    path('', include('gallery.urls')),
+    url('', include('gallery.urls')),
 ]
